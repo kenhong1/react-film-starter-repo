@@ -1,18 +1,44 @@
 import React, { Component } from 'react';
-import TMDB from './TMDB';
-import { all } from 'q';
 import FilmRow from './FilmRow'; 
 
+
 class FilmListing extends Component{
+    constructor(props){
+        super(props)
+        this.state={
+            filter: "all"
+        }
+        this.handleFilterClick = this.handleFilterClick.bind(this) 
+    }
+    handleFilterClick = (filter) => {
+        console.log(`setting filter ${filter}`)
+        this.setState({
+            filter: filter
+        })
+    }
     render(){
-    const allFilms = this.props.films.map((film, index) => <FilmRow film={film} key={index}/> ) 
+        const allFilms = this.props.films.map((film, index) => <FilmRow film={film} key={index}/> ) 
         return(
-                <div className="film-list">
-                <h1 className="section-title"> Films </h1>
-                <h1> {allFilms} </h1>
+        <div className="film-list">
+            <h1 className="section-title">FILMS</h1>
+            <div className="film-list-filters">
+
+                <div className={`film-list-filter ${this.state.filter === "all" ? "is-active" : null }`} onClick={() => this.handleFilterClick("all")}>
+                    ALL
+                    <span className="section-count">{this.props.films.length}</span>
                 </div>
+                <div className={`film-list-filter ${this.state.filter === "faves" ? "is-active" : null }`} onClick={() => this.handleFilterClick('faves')}>
+                    FAVES
+                    <span className="section-count">0</span>
+
+                </div>
+            </div>
+        
+            {allFilms}
+        </div>
         )
     }
+    
 }
 
 export default FilmListing;
