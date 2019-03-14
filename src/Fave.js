@@ -4,31 +4,39 @@ import React, { Component } from 'react';
 class Fave extends Component {
     constructor(props){
         super(props)
-        this.state={
+        this.state = {
             isFave:false 
         }
         this.handleClick = this.handleClick.bind(this) 
     }
-    handleClick = (e) =>{
+    handleClick(e){
         this.setState({
             isFave: !this.state.isFave
         })
         e.stopPropagation(); 
         console.log("clicking favorites")
     } 
-                                
+
     render(){
+        let className = "film-row-fave "
+        let addRemove = ""
+        if(this.state.isFave){ 
+            addRemove = "remove_from_queue" 
+    } else { 
+            addRemove = "add_to_queue"}
+
         return(
-            <div className={`film-row-fave ${this.state.isFave === false ?"add_to_queue" :"remove_from_queue"}`}  onClick={this.handleClick}>
-            
-            <p className="material-icons" > {this.state.isFave === false ?"add_to_queue" :"remove_from_queue"}  </p>
-                
-            </div>
+        <div onClick={this.handleClick} className = {"film-row-fave " + " " + addRemove} >
+
+            <p className="material-icons"> {addRemove}  </p>        
+
+        </div>
         )
-        
     }
 }
 
 
-
 export default Fave;
+
+
+
