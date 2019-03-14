@@ -6,11 +6,28 @@ import TMDB from './TMDB';
 
 
 class App extends Component {
+  constructor(props){ 
+    super(props)
+    this.state= {
+        films: TMDB.films, 
+        current: {} 
+    }
+    this.handleDetailsClick=this.handleDetailsClick.bind(this)
+}
+
+handleDetailsClick(film){
+  console.log("Fetching details for this", film)
+  this.setState({
+    current: film 
+  })
+}
+
+
   render() {
     return(
         <div className="film-library">
-          <FilmListing films={TMDB.films} />
-          <FilmDetails films={TMDB.films} />
+          <FilmListing onDetailsClick={this.handleDetailsClick} films={this.state.films} />
+          <FilmDetails film={this.state.current} />
         </div>
     )
   }
